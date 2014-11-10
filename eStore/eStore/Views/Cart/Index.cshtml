@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@model eStore.Models.ShoppingCartView
+
+<div id="checkout">
+    <h4><span>Checkout</span></h4>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Order no. 0017893547</th>
+                <th>Quantity</th>
+                <th>Size</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.Product.ImageURL" alt="Thumbnail"> <b>@item.Product.Name</b>
+                        <p>
+                            @item.Product.Description
+                        </p>
+                    </td>
+                    <td>
+                        <a href="checkout.html" class="minus"></a> <a href="checkout.html" class="plus"></a>
+                        <input type="text" value="@item.Count" class="txtfield">
+                    </td>
+                    <td>
+                        <a href="checkout.html" class="minus"></a> <a href="checkout.html" class="plus"></a>
+                        <input type="text" value="7.5" class="txtfield">
+                    </td>
+                    <td class="last">
+                        <div>
+                            @item.Product.Price.PriceValue
+                            @using (Html.BeginForm("RemoveFromCart", "Cart", new { id = item.Product.ID }))
+                            {
+                                <input type="submit" value="Delete" class="btn-delete">
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+    <div>
+        @*TOTAL : @Model.CartTotal*@
+    </div>
+    <a href="@Url.Action("Index", "Checkout")" class="proceed-btn">
+        Proceed to Checkout
+    </a>
+</div>
